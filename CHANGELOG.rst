@@ -3,6 +3,9 @@ Changelog
 =========
 Version 2.0.1 [2022-06-09]
 **************************
+APP: **make_dams_lakes_file.py**
+    - Beta release in fp-geo-dev point
+    
 APP: **extract_dams_and_lakes.py**
     - Beta release in fp-geo-dev tools
 
