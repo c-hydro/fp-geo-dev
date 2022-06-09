@@ -1,0 +1,65 @@
+{
+  "algorithm": {
+    "flags": {
+      "make_soil_maps": false,
+      "make_cn_map":false,
+      "make_vegetation_maps":true,
+      "clear_ancillary": false,
+      "soil_maps": {
+        "download_soil_grids": false,
+        "use_local_data": true
+      },
+    "land_cover": {
+      "download_esa_cci_lc": true,
+      "use_local_data": false
+    }
+    },
+    "general": {
+      "domain": "fiji",
+      "log_name": "make_{domain}_soil.log"
+    }
+  },
+  "data": {
+    "dem": {
+      "file_path": "/home/andrea/Desktop/fiji.dem.txt",
+      "srs": "EPSG:4326"
+    },
+    "land_cover": {
+      "conversion_cn_table": "/home/andrea/CIMA/DEVELOPEMENT/nuovi_statici/ESA_CCI_to_CN.csv",
+      "conversion_veg_table": "/home/andrea/CIMA/DEVELOPEMENT/nuovi_statici/ESA_CCI_to_veg.csv",
+      "local_source_settings": {
+        "file_path": "/home/andrea/Desktop/test-soil_maps_new/ancillary/LULC_regrid.tif",
+        "srs": "EPSG:4326"
+      },
+      "download_esa_cci": {
+        "download_path": "https://dap.ceda.ac.uk/neodc/esacci/land_cover/data/land_cover_maps/v2.0.7/ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7.tif"
+      }
+    },
+    "soil_texture": {
+      "local_source_settings": {
+        "file_path_sand": "/home/andrea/Desktop/test-soil_maps_new/ancillary/average_sand_to_reproj.tif",
+        "file_path_clay": "/home/andrea/Desktop/test-soil_maps_new/ancillary/average_clay_to_reproj.tif",
+        "srs": "Homolosine"
+      },
+      "download_soil_grids": {
+        "wcs_server": "http://maps.isric.org/mapserv?map=/map/{var}.map",
+        "map_id": "{var}_{depth}_mean"
+      }
+    }
+  },
+  "path": {
+    "output": "/home/andrea/Desktop/test-soil_maps_new/outcome",
+    "ancillary": "/home/andrea/Desktop/test-soil_maps_new/ancillary"
+  },
+  "log": {
+    "folder": "/home/andrea/Desktop/test-soil_maps_new/log",
+    "file_name": "make_soil_{domain}.log"
+  },
+  "advanced": {
+    "epsg_settings": {
+      "EPSG:4326": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433],AUTHORITY[\"EPSG\",\"4326\"]]",
+      "Homolosine": "PROJCS[\"Homolosine\", GEOGCS[\"WGS 84\", DATUM[\"WGS_1984\", SPHEROID[\"WGS 84\",6378137,298.257223563, AUTHORITY[\"EPSG\",\"7030\"]], AUTHORITY[\"EPSG\",\"6326\"]], PRIMEM[\"Greenwich\",0, AUTHORITY[\"EPSG\",\"8901\"]], UNIT[\"degree\",0.0174532925199433, AUTHORITY[\"EPSG\",\"9122\"]], AUTHORITY[\"EPSG\",\"4326\"]], PROJECTION[\"Interrupted_Goode_Homolosine\"], UNIT[\"Meter\",1]]"
+    }
+  }
+}
+

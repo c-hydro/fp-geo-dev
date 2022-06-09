@@ -1,0 +1,27 @@
+{
+  "algorithm":{
+    "flags": {
+      "clear_ancillary": false
+    },
+    "domain": "d08"
+  },
+  "data": {
+    "input": {
+      "pnt": "/home/andrea/Desktop/med_{domain}.pnt.txt",
+      "choice": "/home/andrea/Desktop/med_{domain}.choice.txt",
+      "area": "/home/andrea/Desktop/med_{domain}.area.txt"
+      },
+    "ancillary": {
+      "folder" : "/home/andrea/Desktop/test_fld/ancillary"
+    },
+    "output": {
+      "folder" : "/home/andrea/Desktop/test_fld/out",
+      "filename" : "med_{domain}.info_section.shp"
+    },
+    "log": {
+      "folder": "/home/andrea/Desktop/test_fld/log",
+      "filename": "log_outputs.log"
+    }
+  }
+}
+

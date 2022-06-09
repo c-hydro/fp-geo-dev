@@ -1,0 +1,38 @@
+{
+  "algorithm":{
+    "flags": {
+      "clear_ancillary": false
+    },
+    "domain": "d08",
+    "buffer_dam_lakes_km": 0.5,
+    "tresholds_vol_MCM": {
+      "dams_field": "CAP_MCM",
+      "dams_value": 100,
+      "lakes_field": "Vol_total",
+      "lakes_value": 100
+    }
+  },
+  "data": {
+    "input": {
+      "choice": "/home/andrea/Desktop/med_{domain}.choice.txt"
+      },
+    "ancillary": {
+      "folder" : "/home/andrea/Desktop/test_fld/ancillary"
+    },
+    "output": {
+      "folder" : "/home/andrea/Desktop/test_fld/out",
+      "filename_dams" : "med_{domain}.dams_in.shp",
+      "filename_lakes" : "med_{domain}.lakes_in.shp"
+    },
+    "log": {
+      "folder": "/home/andrea/Desktop/test_fld/log",
+      "filename": "log_outputs.log"
+    },
+    "database":
+    {
+      "dams": "/home/andrea/CIMA/DATABASE/GranD1_3/GRanD_dams_v1_3.shp",
+      "lakes": "/home/andrea/CIMA/DATABASE/HydroLAKES_points_v10_shp/HydroLAKES_points_v10.shp"
+    }
+  }
+}
+

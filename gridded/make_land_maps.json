@@ -1,0 +1,63 @@
+{
+  "grass": {
+    "grassbin": "grass78",
+    "grassdata": "/home/idrologia/grassdata/",
+    "location": "WGS84"
+  },
+  "algorithm": {
+    "general": {
+      "domain": "IGAD_D1_test",
+      "logName": "hmc_make_land.txt",
+      "demName": "dem_HDMA_90m_d1.tif",
+      "streamName": "stream_HDMA_d1_d2.shp",
+      "wallName": "walls.shp",
+      "depressionsName": "depression_d1_d2.shp",
+      "maskName": "D1.shp"
+    },
+    "flags": {
+      "carve": true,
+      "changeDemRes": true,
+      "existStream": true,
+      "existWall": true,
+      "existBasinMask": true,
+      "existDepressions":true,
+      "compute_WeD": true,
+      "temporaryMapset": false
+    },
+    "resolutions": {
+     "InResKm": 0.09,
+     "OutResKm": 3.34,
+     "soglia_basin_originale_ncell": 30000
+    },
+    "carve_settings": {
+      "LAMBDA": 6,
+      "maxDig": 2,
+      "alfa": -9999
+    },
+    "wall_settings": {
+      "height": 5000
+    },
+    "width_depth_settings": {
+      "aAcc2Width": 11.28,
+      "bAcc2Width": 0.3034,
+      "aWidth2Depth": 0.1097,
+      "bWidth2Depth": 0.3855
+    }
+  },
+  "path": {
+    "general": {
+      "basePath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/",
+      "logPath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/log/",
+      "outPath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/land/",
+      "ancillaryPath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/ancillary/"
+    },
+      "data": {
+        "demPath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/",
+        "streamPath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/",
+        "wallPath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/",
+        "depressionsPath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/",
+        "maskPath": "/home/idrologia/share/HMC_UTILITIES/HMC_static_LAND_preparation/projects/{domain}/"
+      }
+  }
+}
+

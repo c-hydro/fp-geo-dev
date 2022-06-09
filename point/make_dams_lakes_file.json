@@ -1,0 +1,23 @@
+{
+  "algorithm": {
+    "domain": "d08"
+  },
+  "data": {
+    "input": {
+      "dams": "/home/andrea/CIMA/PROJECT_DTE_EVO/dams_lakes/med_{domain}.dams_in.shp",
+      "lakes": "/home/andrea/CIMA/PROJECT_DTE_EVO/dams_lakes/med_{domain}.lakes_in.shp",
+      "choice": "/home/andrea/CIMA/PROJECT_DTE_EVO/domini_masks/choice/med_{domain}.choice.txt",
+      "pnt": "/home/andrea/CIMA/PROJECT_DTE_EVO/domini_masks/pnt/med_{domain}.pnt.txt"
+    },
+    "output": {
+      "folder": "/home/andrea/CIMA/PROJECT_DTE_EVO/domini_masks/point/med_{domain}/point",
+      "filename_dams": "med_{domain}.info_dam.txt",
+      "filename_lakes": "med_{domain}.info_lake.txt"
+    },
+    "log": {
+      "folder": "/home/andrea/CIMA/PROJECT_DTE_EVO/log",
+      "filename": "log_outputs.log"
+    }
+  }
+}
+
