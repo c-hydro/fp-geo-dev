@@ -1,4 +1,4 @@
-# fp-geo-dev
+# geo-hmc-app
 *Python utilities for generating hmc static data*
 
 A set of tools for generating hmc static data :
