@@ -1,21 +1,21 @@
 {
   "algorithm": {
-    "domain": "d08"
+    "domain": "IGAD_D2"
   },
   "data": {
     "input": {
-      "dams": "/home/andrea/CIMA/PROJECT_DTE_EVO/dams_lakes/med_{domain}.dams_in.shp",
-      "lakes": "/home/andrea/CIMA/PROJECT_DTE_EVO/dams_lakes/med_{domain}.lakes_in.shp",
-      "choice": "/home/andrea/CIMA/PROJECT_DTE_EVO/domini_masks/choice/med_{domain}.choice.txt",
-      "pnt": "/home/andrea/CIMA/PROJECT_DTE_EVO/domini_masks/pnt/med_{domain}.pnt.txt"
+      "dams": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/outcome/{domain}.dams_in.shp",
+      "lakes": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/outcome/{domain}.lakes_in.shp",
+      "choice": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/{domain}.choice.txt",
+      "pnt": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/{domain}.pnt.txt"
     },
     "output": {
-      "folder": "/home/andrea/CIMA/PROJECT_DTE_EVO/domini_masks/point/med_{domain}/point",
-      "filename_dams": "med_{domain}.info_dam.txt",
-      "filename_lakes": "med_{domain}.info_lake.txt"
+      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/point",
+      "filename_dams": "{domain}.info_dam.txt",
+      "filename_lakes": "{domain}.info_lake.txt"
     },
     "log": {
-      "folder": "/home/andrea/CIMA/PROJECT_DTE_EVO/log",
+      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/log",
       "filename": "log_outputs.log"
     }
   }

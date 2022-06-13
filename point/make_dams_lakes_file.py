@@ -107,7 +107,7 @@ def main():
             if name is not None:
                 index = index + [name]
             else:
-                index = index + ["Dam_" + domain + str(unnamed_dam_code).zfill(3)]
+                index = index + ["Dam_" + data_settings["algorithm"]["domain"] + str(unnamed_dam_code).zfill(3)]
                 unnamed_dam_code = unnamed_dam_code + 1
 
         gdf["DAM_NAME"] = index
@@ -129,7 +129,7 @@ def main():
                 Y_HMC = np.ceil(np.abs((gdf.loc[dam_name].geometry.x-x_ll))/res)
                 X_HMC = np.ceil(np.abs((gdf.loc[dam_name].geometry.y-y_ul))/res)
                 if choice[int(X_HMC) - 1, int(Y_HMC) - 1]==0:
-                    raise ValueError("DOMAIN: " + domain + ".The dam " + dam_name + " is not on the network")
+                    raise ValueError("DOMAIN: " + data_settings["algorithm"]["domain"] + ".The dam " + dam_name + " is not on the network")
                 dam_file.write(str(int(X_HMC)) + " " + str(int(Y_HMC)) + "\t\t\t#Row and column dam coordinates\n")
                 # Number of plants
                 dam_file.write("1\t\t\t#Number of plants downstream the dam\n")
@@ -162,7 +162,7 @@ def main():
                 X_HMC_OUT = int(X_HMC) - (int((pnt[int(X_HMC)-1, int(Y_HMC)-1] - 1) / 3) - 1)
                 Y_HMC_OUT = int(Y_HMC) + pnt[int(X_HMC)-1, int(Y_HMC)-1] - 5 - 3 * (int((pnt[int(X_HMC)-1, int(Y_HMC)-1] - 1) / 3) - 1)
                 if choice[int(X_HMC_OUT) - 1, int(Y_HMC_OUT) - 1]==0:
-                    raise ValueError("DOMAIN: " + domain + ".The dam " + dam_name + " output is not on the network")
+                    raise ValueError("DOMAIN: " + data_settings["algorithm"]["domain"] + ".The dam " + dam_name + " output is not on the network")
                 dam_file.write(str(int(X_HMC_OUT)) + " " + str(int(Y_HMC_OUT)) + "\t\t\t#Row and column outlet dam coordinates\n")
                 # Plant features
                 max_discharge_m3_s =  0.001 * 2.5 * gdf.loc[dam_name, "DIS_AVG_LS"]
@@ -192,7 +192,7 @@ def main():
             if name is not None:
                 index = index + [name]
             else:
-                index = index + ["Lake_" + domain + str(unnamed_lake_code).zfill(3)]
+                index = index + ["Lake_" + data_settings["algorithm"]["domain"] + str(unnamed_lake_code).zfill(3)]
                 unnamed_lake_code = unnamed_lake_code + 1
 
         gdf["Lake_name"] = index
@@ -203,7 +203,7 @@ def main():
         # Drops lake if residence time is not valid
         index_to_drops = gdf.index[gdf['Res_time'] < 0]
         if len(index_to_drops) > 0:
-            lakes_not_valid = lakes_not_valid + [domain + " : " + i for i in index_to_drops]
+            lakes_not_valid = lakes_not_valid + [data_settings["algorithm"]["domain"] + " : " + i for i in index_to_drops]
             gdf.drop(gdf.index[gdf['Res_time'] < 0], inplace=True)
 
         logging.info(" ----> " + str(len(gdf)) + " valid lakes found!")
@@ -221,7 +221,7 @@ def main():
                 Y_HMC = np.ceil(np.abs((gdf.loc[lake_name].geometry.x-x_ll))/res)
                 X_HMC = np.ceil(np.abs((gdf.loc[lake_name].geometry.y-y_ul))/res)
                 if choice[int(X_HMC) - 1, int(Y_HMC) - 1] == 0:
-                    raise ValueError("DOMAIN: " + domain + ".The lake " + lake_name + " " + str(X_HMC) + "-" + str(Y_HMC) + " is not on the network")
+                    raise ValueError("DOMAIN: " + data_settings["algorithm"]["domain"] + ".The lake " + lake_name + " " + str(X_HMC) + "-" + str(Y_HMC) + " is not on the network")
                 dam_file.write(str(int(X_HMC)) + " " + str(int(Y_HMC)) + "\t\t\t#Row and column dam coordinates\n")
                 # Code for distributed lakes
                 dam_file.write("-9999\t\t\t#Code of the lakes cells of the dam (if point dam set to -9999)\n")
