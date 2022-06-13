@@ -1,0 +1,24 @@
+{
+  "algorithm": {
+    "domain": "IGAD_D2"
+  },
+  "data": {
+    "input": {
+      "section": {
+        "filename": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/sections.shp",
+        "name_col" : "ADHI_ID",
+        "river_col" : "RiverName"
+      },
+      "choice": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/{domain}.choice.txt"
+    },
+    "output": {
+      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/outcome/",
+      "filename": "{domain}.info_section.txt"
+    },
+    "log": {
+      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D2/log",
+      "filename": "log_outputs.log"
+    }
+  }
+}
+
