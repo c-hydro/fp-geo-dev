@@ -146,7 +146,7 @@ def main():
         logging.info(" ---> Write lakes output...")
         lakes_in.to_file(output_file_lakes)
     else:
-        logging.warning(" --> WARNING! No dams in the domain with the current settings!")
+        logging.warning(" --> WARNING! No lakes in the domain with the current settings!")
 
     os.system("rm " + temp_lakes.replace(".shp",".*"))
 
