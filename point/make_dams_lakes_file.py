@@ -3,8 +3,8 @@
 """
 fp-geo - Make Dams and Lakes file
 
-__date__ = '20220607'
-__version__ = '1.0.1'
+__date__ = '20220701'
+__version__ = '1.0.2'
 __author__ =
         'Andrea Libertino (andrea.libertino@cimafoundation.org')
 __library__ = 'fp-geo'
@@ -13,6 +13,7 @@ General command line:
 python3 MakeSoilMaps
 
 Version(s):
+20220701 (1.0.2) -->    Correct lake routine bug
 20220607 (1.0.1) -->    Include json config file
 20220113 (1.0.0) --> 	Beta release
 """
@@ -31,7 +32,7 @@ from argparse import ArgumentParser
 # Algorithm information
 alg_name = 'fp-geo - Make dams and lakes file'
 alg_version = '1.0.1'
-alg_release = '2022-06-07'
+alg_release = '2022-07-01'
 # Algorithm parameter(s)
 time_format = '%Y%m%d%H%M'
 # -------------------------------------------------------------------------------------
@@ -224,7 +225,7 @@ def main():
                     raise ValueError("DOMAIN: " + data_settings["algorithm"]["domain"] + ".The lake " + lake_name + " " + str(X_HMC) + "-" + str(Y_HMC) + " is not on the network")
                 dam_file.write(str(int(X_HMC)) + " " + str(int(Y_HMC)) + "\t\t\t#Row and column dam coordinates\n")
                 # Code for distributed lakes
-                dam_file.write("-9999\t\t\t#Code of the lakes cells of the dam (if point dam set to -9999)\n")
+                dam_file.write("-9999\t\t\t#Code of the lakes cells of the lake (if point dam set to -9999)\n")
                 # Volume features
                 vol_tot = gdf.loc[lake_name, "Vol_total"] * (10 ** 6)
                 dis_avg = gdf.loc[lake_name, "Dis_avg"]
@@ -237,9 +238,9 @@ def main():
                 res_time_hr = res_time_day * 24
                 lake_const = 1 / res_time_hr
                 # discharge_exp = gdf.loc[lake_name,"Vol_total"]*(10**6)/(res_time_hr*3600)
-                dam_file.write(str(lake_const) + "\t\t\t#Lake constant (1/h) \n")
                 dam_file.write(str(vol_min) + "\t\t\t#Minimum storage non-null discharge (m3)\n")
                 dam_file.write(str(vol_init) + "\t\t\t#Initial storage (m3)\n")
+                dam_file.write(str(lake_const) + "\t\t\t#Lake constant (1/h) \n")
                 dam_file.write(lake_sep)
                 logging.info('----> Characterize lake: ' + lake_name + '...DONE')
 
