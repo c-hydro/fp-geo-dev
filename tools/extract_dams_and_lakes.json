@@ -3,7 +3,7 @@
     "flags": {
       "clear_ancillary": false
     },
-    "domain": "buzi",
+    "domain": "IGAD_D14",
     "buffer_dam_lakes_km": 0.5,
     "tresholds_vol_MCM": {
       "dams_field": "CAP_MCM",
@@ -14,18 +14,18 @@
   },
   "data": {
     "input": {
-      "choice": "/home/andrea/Desktop/data_static/gridded/{domain}.choice.txt"
+      "choice": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D14/{domain}.choice.txt"
       },
     "ancillary": {
-      "folder" : "/home/andrea/Desktop/data_static/ancillary"
+      "folder" : "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D14/ancillary"
     },
     "output": {
-      "folder" : "/home/andrea/Desktop/data_static/outcome",
+      "folder" : "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D14/outcome",
       "filename_dams" : "{domain}.dams_in.shp",
       "filename_lakes" : "{domain}.lakes_in.shp"
     },
     "log": {
-      "folder": "/home/andrea/Desktop/data_static/log",
+      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D14/log",
       "filename": "log_outputs.log"
     },
     "database":

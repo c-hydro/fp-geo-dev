@@ -80,14 +80,14 @@ def main():
     # Read pysheds input data
     grid = Grid.from_ascii(data_settings["data"]["input"]["pnt"].replace("{domain}",data_settings["algorithm"]["domain"]))
     pnt = grid.read_ascii(data_settings["data"]["input"]["pnt"].replace("{domain}",data_settings["algorithm"]["domain"]))
-    pnt_view = grid.view(pnt, nodata=-9999)
+    pnt.nodata = -9999
     choice = grid.read_ascii(data_settings["data"]["input"]["choice"].replace("{domain}",data_settings["algorithm"]["domain"]))
     logging.info(" --> Read input data... DONE")
 
     logging.info(" --> Classify choice...")
     # Classify choice raster with unique ids for streams
     dirmap_HMC = (8, 9, 6, 3, 2, 1, 4, 7)
-    streams = grid.extract_river_network(fdir=pnt_view, mask=choice==1, dirmap=dirmap_HMC, routing='d8')
+    streams = grid.extract_river_network(fdir=pnt, mask=choice==1, dirmap=dirmap_HMC, routing='d8')
     streams_coll = zip([i["geometry"] for i in streams["features"]], [i["id"] for i in streams["features"]])
     river_raster = grid.rasterize(streams_coll)
     grid.to_raster(river_raster,ancillary_file)
@@ -96,6 +96,8 @@ def main():
     logging.info(" --> Read data for zonal stats...")
     # Read rioxarray files for zonal stats
     acc = rxr.open_rasterio(data_settings["data"]["input"]["area"].replace("{domain}",data_settings["algorithm"]["domain"]))
+    choice = rxr.open_rasterio(data_settings["data"]["input"]["choice"].replace("{domain}", data_settings["algorithm"]["domain"]))
+    acc.values = np.where(choice.values<0,-9999,acc.values)
     streams = rxr.open_rasterio(ancillary_file)
     logging.info(" --> Read data for zonal stats...DONE")
 

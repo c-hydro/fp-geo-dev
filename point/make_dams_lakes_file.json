@@ -1,21 +1,21 @@
 {
   "algorithm": {
-    "domain": "buzi"
+    "domain": "IGAD_D14"
   },
   "data": {
     "input": {
-      "dams": "/home/andrea/Desktop/data_static/outcome/{domain}.dams_in.shp",
-      "lakes": "/home/andrea/Desktop/data_static/outcome/{domain}.lakes_in.shp",
-      "choice": "/home/andrea/Desktop/data_static/gridded/{domain}.choice.txt",
-      "pnt": "/home/andrea/Desktop/data_static/gridded/{domain}.pnt.txt"
+      "dams": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/outcome/{domain}.dams_in.shp",
+      "lakes": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/outcome/{domain}.lakes_in.shp",
+      "choice": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/{domain}.choice.txt",
+      "pnt": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/{domain}.pnt.txt"
     },
     "output": {
-      "folder": "/home/andrea/Desktop/data_static/outcome/point",
+      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/point",
       "filename_dams": "{domain}.info_dam.txt",
       "filename_lakes": "{domain}.info_lake.txt"
     },
     "log": {
-      "folder": "/home/andrea/Desktop/data_static/outcome/log",
+      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/log",
       "filename": "log_outputs.log"
     }
   }
