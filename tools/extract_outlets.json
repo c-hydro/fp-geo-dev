@@ -3,20 +3,20 @@
     "flags": {
       "clear_ancillary": false
     },
-    "domain": "LiguriaDomain"
+    "domain": "marche"
   },
   "data": {
     "input": {
-      "pnt": "/home/andrea/CIMA/PROJECT_dpc_reflex/coefficients/gev/{domain}.pnt.txt",
-      "choice": "/home/andrea/CIMA/PROJECT_dpc_reflex/coefficients/gev/{domain}.choice.txt",
-      "area": "/home/andrea/CIMA/PROJECT_dpc_reflex/coefficients/gev/{domain}.area.txt"
+      "pnt": "/home/andrea/CIMA/PROJECT_Marche/static_op/gridded/{domain}.pnt.txt",
+      "choice": "/home/andrea/CIMA/PROJECT_Marche/static_op/gridded/{domain}.choice.txt",
+      "area": "/home/andrea/CIMA/PROJECT_Marche/static_op/gridded/{domain}.area.txt"
       },
     "ancillary": {
       "folder" : "/home/andrea/Desktop/test_fld/ancillary"
     },
     "output": {
-      "folder" : "/home/andrea/CIMA/PROJECT_dpc_reflex/coefficients/out",
-      "filename" : "med_{domain}.info_section.shp"
+      "folder" : "/home/andrea/CIMA/PROJECT_Marche/evento_set_22",
+      "filename" : "{domain}.info_section.shp"
     },
     "log": {
       "folder": "/home/andrea/CIMA/PROJECT_dpc_reflex/coefficients/log",
