@@ -1,21 +1,21 @@
 {
   "algorithm": {
-    "domain": "IGAD_D14"
+    "domain": "volta"
   },
   "data": {
     "input": {
-      "dams": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/outcome/{domain}.dams_in.shp",
-      "lakes": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/outcome/{domain}.lakes_in.shp",
-      "choice": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/{domain}.choice.txt",
-      "pnt": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/{domain}.pnt.txt"
+      "dams": "/home/andrea/CIMA/PROJECT_Volta/static_data/ancillary/{domain}/{domain}.dams_in.shp",
+      "lakes": "/home/andrea/CIMA/PROJECT_Volta/static_data/ancillary/{domain}/{domain}.lakes_in.shp",
+      "choice": "/home/andrea/CIMA/PROJECT_Volta/static_data/land/{domain}.choice.txt",
+      "pnt": "/home/andrea/CIMA/PROJECT_Volta/static_data/land/{domain}.pnt.txt"
     },
     "output": {
-      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/point",
+      "folder": "/home/andrea/CIMA/PROJECT_Volta/static_data/point/",
       "filename_dams": "{domain}.info_dam.txt",
       "filename_lakes": "{domain}.info_lake.txt"
     },
     "log": {
-      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/{domain}/log",
+      "folder": "/home/andrea/CIMA/PROJECT_Volta/static_data/log/",
       "filename": "log_outputs.log"
     }
   }

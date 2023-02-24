@@ -3,29 +3,29 @@
     "flags": {
       "clear_ancillary": false
     },
-    "domain": "IGAD_D14",
+    "domain": "volta",
     "buffer_dam_lakes_km": 0.5,
     "tresholds_vol_MCM": {
       "dams_field": "CAP_MCM",
-      "dams_value": 300,
+      "dams_value": 200,
       "lakes_field": "Vol_total",
-      "lakes_value": 300
+      "lakes_value": 200
     }
   },
   "data": {
     "input": {
-      "choice": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D14/{domain}.choice.txt"
+      "choice": "/home/andrea/CIMA/PROJECT_Volta/static_data/land/{domain}.choice.txt"
       },
     "ancillary": {
-      "folder" : "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D14/ancillary"
+      "folder" : "/home/andrea/CIMA/PROJECT_Volta/static_data/ancillary/{domain}"
     },
     "output": {
-      "folder" : "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D14/outcome",
+      "folder" : "/home/andrea/CIMA/PROJECT_Volta/static_data/ancillary/{domain}",
       "filename_dams" : "{domain}.dams_in.shp",
       "filename_lakes" : "{domain}.lakes_in.shp"
     },
     "log": {
-      "folder": "/home/andrea/CIMA/DEVELOPEMENT/CALIBRATION_HMC/IGAD_D14/log",
+      "folder": "/home/andrea/CIMA/PROJECT_Volta/static_data/log",
       "filename": "log_outputs.log"
     },
     "database":

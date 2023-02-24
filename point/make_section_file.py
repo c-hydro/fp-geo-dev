@@ -121,7 +121,10 @@ def main():
                 if gdf_col_river is None:
                     river = domain
                 else:
-                    river = gdf.loc[sect_name, gdf_col_river].replace(" ","_")
+                    try:
+                        river = gdf.loc[sect_name, gdf_col_river].replace(" ","_")
+                    except:
+                        river = "-9999"
                 # Sect coords
                 Y_HMC = np.ceil(np.abs((gdf.loc[sect_name].geometry.x-x_ll))/res)
                 X_HMC = np.ceil(np.abs((gdf.loc[sect_name].geometry.y-y_ul))/res)
