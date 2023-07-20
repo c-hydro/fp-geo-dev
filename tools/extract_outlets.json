@@ -7,19 +7,19 @@
   },
   "data": {
     "input": {
-      "pnt": "/home/andrea/CIMA/PROJECT_Marche/static_op/gridded/{domain}.pnt.txt",
-      "choice": "/home/andrea/CIMA/PROJECT_Marche/static_op/gridded/{domain}.choice.txt",
-      "area": "/home/andrea/CIMA/PROJECT_Marche/static_op/gridded/{domain}.area.txt"
+      "pnt": "/home/andrea/Desktop/misa/marche.pnt.txt",
+      "choice": "/home/andrea/Desktop/misa/marche.choice.txt",
+      "area": "/home/andrea/Desktop/misa/marche.area.txt"
       },
     "ancillary": {
-      "folder" : "/home/andrea/Desktop/test_fld/ancillary"
+      "folder" : "/home/andrea/Desktop/misa/ancillary"
     },
     "output": {
-      "folder" : "/home/andrea/CIMA/PROJECT_Marche/evento_set_22",
+      "folder" : "/home/andrea/Desktop/misa/output/",
       "filename" : "{domain}.info_section.shp"
     },
     "log": {
-      "folder": "/home/andrea/CIMA/PROJECT_dpc_reflex/coefficients/log",
+      "folder": "/home/andrea/Projects/WMO_Volta/all_static/log",
       "filename": "log_outputs.log"
     }
   }

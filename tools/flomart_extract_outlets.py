@@ -26,7 +26,7 @@ from xrspatial import zonal_stats
 from pysheds.grid import Grid
 import time, json, logging, os
 from argparse import ArgumentParser
-from pyproj import CRS
+import pyproj
 # -------------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------------
@@ -46,10 +46,11 @@ def main():
     # Get algorithm settings
     alg_settings, domain = get_args()
 
+    soglia_area = 6  # km2
+    dDemMet = 0.489  # Passo DEM in km
+
     # Set algorithm settings
     data_settings = read_file_json(alg_settings)
-
-    crs = CRS.from_epsg(4326)
 
     if domain is not None:
         data_settings["algorithm"]["domain"] = domain
@@ -68,6 +69,7 @@ def main():
 
     ancillary_file = os.path.join(ancillary_folder, "stream_ids.tif")
     output_file = os.path.join(out_folder, data_settings["data"]["output"]["filename"].replace("{domain}",data_settings["algorithm"]["domain"]))
+    output_map = os.path.join(out_folder, "stream_ids_" + data_settings["algorithm"]["domain"] + ".tif")
     logging.info(" --> Initialize folders...DONE")
     # -------------------------------------------------------------------------------------
 
@@ -79,30 +81,67 @@ def main():
     logging.info(' ==> ALGORITHM SETTINGS <== ')
     logging.info(' ----> Domain: ' + data_settings["algorithm"]["domain"])
 
+    crs = pyproj.Proj('epsg:4326')
+
     logging.info(" --> Read input data...")
     # Read pysheds input data
     try:
-        grid = Grid.from_ascii(data_settings["data"]["input"]["pnt"].replace("{domain}",data_settings["algorithm"]["domain"]))
+        grid = Grid.from_ascii(
+            data_settings["data"]["input"]["pnt"].replace("{domain}", data_settings["algorithm"]["domain"]))
     except UnicodeDecodeError:
-        grid = Grid.from_raster(data_settings["data"]["input"]["pnt"].replace("{domain}", data_settings["algorithm"]["domain"]))
+        grid = Grid.from_raster(
+            data_settings["data"]["input"]["pnt"].replace("{domain}", data_settings["algorithm"]["domain"]))
     try:
-        pnt = grid.read_ascii(data_settings["data"]["input"]["pnt"].replace("{domain}",data_settings["algorithm"]["domain"]))
+        pnt = grid.read_ascii(
+            data_settings["data"]["input"]["pnt"].replace("{domain}", data_settings["algorithm"]["domain"]))
     except UnicodeDecodeError:
-        pnt = grid.read_raster(data_settings["data"]["input"]["pnt"].replace("{domain}", data_settings["algorithm"]["domain"]))
+        pnt = grid.read_raster(
+            data_settings["data"]["input"]["pnt"].replace("{domain}", data_settings["algorithm"]["domain"]))
     pnt.nodata = -9999
     pnt.crs = grid.crs
     try:
-        choice = grid.read_ascii(data_settings["data"]["input"]["choice"].replace("{domain}",data_settings["algorithm"]["domain"]))
+        choice = grid.read_ascii(
+            data_settings["data"]["input"]["choice"].replace("{domain}", data_settings["algorithm"]["domain"]))
         choice.crs = grid.crs
     except UnicodeDecodeError:
         choice = grid.read_raster(data_settings["data"]["input"]["choice"].replace("{domain}", data_settings["algorithm"]["domain"]))
+    try:
+        wm = grid.read_ascii(data_settings["data"]["input"]["pnt"].replace("{domain}", data_settings["algorithm"]["domain"]).replace("pnt","WaterMarkQ"), crs=crs)
+        mask = wm!=1
+        grid.mask = mask
+    except:
+        pass
+
+    pnt.nodata = -9999
+    #area = grid.read_ascii(data_settings["data"]["input"]["area"].replace("{domain}",data_settings["algorithm"]["domain"]), crs=crs)
+     #area_km = (dDemMet ** 2) * area
     logging.info(" --> Read input data... DONE")
 
     logging.info(" --> Classify choice...")
     # Classify choice raster with unique ids for streams
     dirmap_HMC = (8, 9, 6, 3, 2, 1, 4, 7)
     #dirmap_HMC = (2, 1, 8, 7, 6, 5, 4, 3)
-    streams = grid.extract_river_network(fdir=pnt, mask=choice>=1, dirmap=dirmap_HMC, routing='d8')
+
+
+    cellsize = pnt.affine[0]
+    xll = pnt.affine[2]
+    yll_affine = pnt.affine[5]
+
+    from affine import Affine
+    import geojson
+
+    shifted_affine = Affine(cellsize, 0, xll + cellsize/2 , 0, -cellsize, yll_affine - cellsize/2)
+    profiles, connections = grid.extract_profiles(fdir=pnt, mask=choice>=1, dirmap=dirmap_HMC, routing='d8', nodata_in=-9999, include_endpoint=False)
+
+    featurelist = []
+    for index, profile in enumerate(profiles):
+        endpoint = profiles[connections[index]][0]
+        yi, xi = np.unravel_index(profile + [endpoint], pnt.shape)
+        x, y = shifted_affine * (xi, yi)
+        line = geojson.LineString(np.column_stack([x, y]).tolist())
+        featurelist.append(geojson.Feature(geometry=line, id=index))
+    streams = geojson.FeatureCollection(featurelist)
+
     streams_coll = zip([i["geometry"] for i in streams["features"]], [i["id"] for i in streams["features"]])
     river_raster = grid.rasterize(streams_coll)
     grid.to_raster(river_raster,ancillary_file)
@@ -110,10 +149,13 @@ def main():
 
     logging.info(" --> Read data for zonal stats...")
     # Read rioxarray files for zonal stats
-    acc = rxr.open_rasterio(data_settings["data"]["input"]["area"].replace("{domain}",data_settings["algorithm"]["domain"]))
-    choice = rxr.open_rasterio(data_settings["data"]["input"]["choice"].replace("{domain}", data_settings["algorithm"]["domain"]))
-    acc.values = np.where(choice.values<0,-9999,acc.values)
-    streams = rxr.open_rasterio(ancillary_file)
+    #base_grid = rxr.open_rasterio("/home/andrea/Desktop/vct/Romagna/RomagnaDomain.tif") #"/home/andrea/Desktop/Projects/DPC_Flomart_Italia/grid_FPitalia.tif")
+    base_grid = rxr.open_rasterio(data_settings["data"]["input"]["area"].replace("{domain}",data_settings["algorithm"]["domain"]))
+    acc = rxr.open_rasterio(data_settings["data"]["input"]["area"].replace("{domain}",data_settings["algorithm"]["domain"])).reindex_like(base_grid, method="nearest")
+    acc_values_km = (dDemMet ** 2) * acc.values
+    acc.values = np.where(acc_values_km<soglia_area,-9999,acc.values)
+    streams = rxr.open_rasterio(ancillary_file).reindex_like(base_grid, method="nearest")
+    #streams = streams.dropna("x","all").dropna("y","all").rio.to_raster("/home/andrea/Desktop/align.tif")
     logging.info(" --> Read data for zonal stats...DONE")
 
     logging.info(" --> Find outlets...")
@@ -139,12 +181,13 @@ def main():
 
     gdf = gpd.GeoDataFrame({"id" : [data_settings["algorithm"]["domain"] + "P" + str(int(i)).zfill(5) for i in da_stacked.values], "domain" : data_settings["algorithm"]["domain"]}, index= da_stacked.values.astype(int), geometry=gpd.points_from_xy(da_stacked.x.values, da_stacked.y.values))
 
-    for val, x, y in zip(gdf.index.values, da_stacked.x.values, da_stacked.y.values):
-        gdf.loc[val,["x_HMC", "y_HMC"]] = [int(grid.nearest_cell(x,y,snap='center')[1] + 1) , int(grid.nearest_cell(x,y,snap='center')[0] + 1)]
+    #for val, x, y in zip(gdf.index.values, da_stacked.x.values, da_stacked.y.values):
+    #    gdf.loc[val,["x_HMC", "y_HMC"]] = [int(grid.nearest_cell(x,y,snap='center')[1] + 1) , int(grid.nearest_cell(x,y,snap='center')[0] + 1)]
 
-    gdf = gdf.astype({"id": str, "domain": str, "x_HMC" : int, "y_HMC" : int})
+    gdf = gdf.astype({"id": str, "domain": str}) #, "x_HMC" : int, "y_HMC" : int})
     gdf.set_crs(epsg=4326, inplace=True).to_file(output_file)
-    gdf.to_csv(output_file.replace(".shp",".txt"), columns=["x_HMC", "y_HMC", "domain", "id"], sep=' ', header=False, index=False)
+    streams.astype('int32').dropna("x", "all").dropna("y", "all").rio.to_raster(output_map, dtype="int32", compress="DEFLATE")
+    #gdf.to_csv(output_file.replace(".shp",".txt"), columns=["x_HMC", "y_HMC", "domain", "id"], sep=' ', header=False, index=False)
 
     logging.info(" --> Find outlets...DONE")
 

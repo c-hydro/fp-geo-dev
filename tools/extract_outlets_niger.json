@@ -1,0 +1,27 @@
+{
+  "algorithm":{
+    "flags": {
+      "clear_ancillary": false
+    },
+    "domain": "niger"
+  },
+  "data": {
+    "input": {
+      "pnt": "/home/andrea/Projects/Niger/land/{domain}.pnt.txt",
+      "choice": "/home/andrea/Projects/Niger/land/{domain}.choice.txt",
+      "area": "/home/andrea/Projects/Niger/land/{domain}.area.txt"
+      },
+    "ancillary": {
+      "folder" : "/home/andrea/Projects/Niger/land/ancillary"
+    },
+    "output": {
+      "folder" : "/home/andrea/Projects/Niger/land/",
+      "filename" : "{domain}.info_section.shp"
+    },
+    "log": {
+      "folder": "/home/andrea/Projects/WMO_Volta/all_static/log",
+      "filename": "log_outputs.log"
+    }
+  }
+}
+
