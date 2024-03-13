@@ -1,21 +1,21 @@
 {
   "algorithm": {
-    "domain": "volta"
+    "domain": "Liban"
   },
   "data": {
     "input": {
-      "dams": "/home/andrea/CIMA/PROJECT_Volta/static_data/ancillary/{domain}/{domain}.dams_in.shp",
-      "lakes": "/home/andrea/CIMA/PROJECT_Volta/static_data/ancillary/{domain}/{domain}.lakes_in.shp",
-      "choice": "/home/andrea/CIMA/PROJECT_Volta/static_data/land/{domain}.choice.txt",
-      "pnt": "/home/andrea/CIMA/PROJECT_Volta/static_data/land/{domain}.pnt.txt"
+      "dams": "/home/andrea/Projects/Lebanon/HMC/Hydro derivatives/Liban/{domain}.dams_in.shp",
+      "lakes": "/home/andrea/Projects/Lebanon/HMC/Hydro derivatives/Liban/{domain}.lakes_in.shp",
+      "choice": "/home/andrea/Projects/Lebanon/HMC/Hydro derivatives/{domain}.choice.txt",
+      "pnt": "/home/andrea/Projects/Lebanon/HMC/Hydro derivatives/{domain}.pnt.txt"
     },
     "output": {
-      "folder": "/home/andrea/CIMA/PROJECT_Volta/static_data/point/",
+      "folder": "/home/andrea/Projects/Lebanon/HMC/Hydro derivatives/point/",
       "filename_dams": "{domain}.info_dam.txt",
       "filename_lakes": "{domain}.info_lake.txt"
     },
     "log": {
-      "folder": "/home/andrea/CIMA/PROJECT_Volta/static_data/log/",
+      "folder": "/home/andrea/Projects/Lebanon/HMC/Hydro derivatives/point",
       "filename": "log_outputs.log"
     }
   }

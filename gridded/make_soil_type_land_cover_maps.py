@@ -3,8 +3,8 @@
 """
 fp-geo - Make Soil Type Land Cover Maps
 
-__date__ = '20220430'
-__version__ = '2.0.2'
+__date__ = '20240311'
+__version__ = '2.0.3'
 __author__ =
         'Andrea Libertino (andrea.libertino@cimafoundation.org')
 __library__ = 'fp-geo'
@@ -13,6 +13,7 @@ General command line:
 python3 MakeSoilMaps
 
 Version(s):
+20240311 (2.0.3) -->    Beta support to new soil parametrization
 20220430 (2.0.2) -->    Added support to longitudes crossing the 180 degree for Fiji
                         Added first attempt Field Capacity estimation with Saxton et al., 1986
 20211203 (2.0.1) -->    Add vegetation layers procedures
@@ -47,8 +48,8 @@ from copy import deepcopy
 # -------------------------------------------------------------------------------------
 # Algorithm information
 alg_name = 'fp-geo tools - Make Soil Type Land Cover Maps'
-alg_version = '2.0.2'
-alg_release = '2022-04-30'
+alg_version = '2.0.3'
+alg_release = '2024-03-11'
 # Algorithm parameter(s)
 time_format = '%Y%m%d%H%M'
 
@@ -310,6 +311,8 @@ def main():
         a = np.exp(-4.396-0.0715*clay-0.000488*(sand**2)-0.00004285*(sand**2)*clay)
         b = -3.14-0.00222*(clay**2)-0.00003484*(sand**2)*clay
         fc = (0.33333/a)**(1/b)
+        porosity = 0.332-0.0007251*sand+0.1276*np.log10(clay)
+        ks = np.exp((12.012-0.0755*sand)+(-3.895+0.03671*sand-0.1103*clay+0.00087546*clay**2)/porosity)
 
         # Compute hydrological soil groups by assigning a soil class 1-12 according to USDA classification, a map is generated in the "ancillary" folder for CN
         if data_settings["algorithm"]["flags"]["make_cn_map"]:
@@ -350,6 +353,17 @@ def main():
                 dst.write(fc.astype(np.float32), 1)
             convertAIIGrid(os.path.join(ancillary_folder, "ct_first_attempt.tif"),
                            os.path.join(out_folder, data_settings["algorithm"]["general"]["domain"] + ".ct.txt"),
+                           'Float32')
+            with rio.open(os.path.join(ancillary_folder, "ksat_first_attempt_infilt.tif"), 'w', **out_profile) as dst:
+                dst.write(ks.astype(np.float32), 1)
+                with rio.open(os.path.join(ancillary_folder, "ksat_first_attempt_drain.tif"), 'w', **out_profile) as dst:
+                    dst.write(ks.astype(np.float32), 1)
+            convertAIIGrid(os.path.join(ancillary_folder, "ksat_first_attempt_infilt.tif"),
+                           os.path.join(out_folder, data_settings["algorithm"]["general"]["domain"] + ".soil_ksat_infilt.txt"),
+                           'Float32')
+            convertAIIGrid(os.path.join(ancillary_folder, "ksat_first_attempt_drain.tif"),
+                           os.path.join(out_folder,
+                                        data_settings["algorithm"]["general"]["domain"] + ".soil_ksat_drain.txt"),
                            'Float32')
         logging.info(" ---> Write average clay and sand fraction...DONE")
     # -------------------------------------------------------------------------------------
@@ -441,12 +455,21 @@ def main():
             for num, hsg_class in enumerate(["A", "B", "C", "D"], start=1):
                 cn_map = np.where(hsg == num, classified_maps[hsg_class].values.reshape(cn_map.shape), cn_map)
 
+            S = 254 * ((100 / cn_map) - 1)
+            S[S<0] = -9999
+
             with rio.open(os.path.join(ancillary_folder, "temp_cn.tif"), 'w', **out_profile) as dst:
                 dst.write(cn_map.astype(np.float32), 1)
+
+            with rio.open(os.path.join(ancillary_folder, "temp_S.tif"), 'w', **out_profile) as dst:
+                dst.write(S.astype(np.float32), 1)
 
             convertAIIGrid(os.path.join(ancillary_folder, "temp_cn.tif"),
                            os.path.join(out_folder, data_settings["algorithm"]["general"]["domain"] + ".cn.txt"),
                            'Int16')
+            convertAIIGrid(os.path.join(ancillary_folder, "temp_S.tif"),
+                           os.path.join(out_folder, data_settings["algorithm"]["general"]["domain"] + ".soil_vmax.txt"),
+                           'Float32')
             logging.info(" ---> Calculate CN...DONE")
 
         # Calculate vegetation layers with a lookup table assigning the land cover class to the different veg variables

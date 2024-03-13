@@ -1,34 +1,34 @@
 {
   "algorithm": {
     "flags": {
-      "make_soil_maps": false,
-      "make_cn_map":false,
-      "make_vegetation_maps":true,
+      "make_soil_maps": true,
+      "make_cn_map":true,
+      "make_vegetation_maps":false,
       "clear_ancillary": false,
       "soil_maps": {
         "download_soil_grids": false,
         "use_local_data": true
       },
     "land_cover": {
-      "download_esa_cci_lc": true,
-      "use_local_data": false
+      "download_esa_cci_lc": false,
+      "use_local_data": true
     }
     },
     "general": {
-      "domain": "fiji",
+      "domain": "IGAD_D15",
       "log_name": "make_{domain}_soil.log"
     }
   },
   "data": {
     "dem": {
-      "file_path": "/home/andrea/Desktop/fiji.dem.txt",
+      "file_path": "/home/andrea/Desktop/New Folder 2/IGAD_D15.dem.txt",
       "srs": "EPSG:4326"
     },
     "land_cover": {
-      "conversion_cn_table": "/home/andrea/CIMA/DEVELOPEMENT/nuovi_statici/ESA_CCI_to_CN.csv",
+      "conversion_cn_table": "/home/andrea/Desktop/New Folder 2/src/ESA_CCI_to_CN.csv",
       "conversion_veg_table": "/home/andrea/CIMA/DEVELOPEMENT/nuovi_statici/ESA_CCI_to_veg.csv",
       "local_source_settings": {
-        "file_path": "/home/andrea/Desktop/test-soil_maps_new/ancillary/LULC_regrid.tif",
+        "file_path": "/home/andrea/Desktop/New Folder 2/LULC_regrid.tif",
         "srs": "EPSG:4326"
       },
       "download_esa_cci": {
@@ -37,9 +37,9 @@
     },
     "soil_texture": {
       "local_source_settings": {
-        "file_path_sand": "/home/andrea/Desktop/test-soil_maps_new/ancillary/average_sand_to_reproj.tif",
-        "file_path_clay": "/home/andrea/Desktop/test-soil_maps_new/ancillary/average_clay_to_reproj.tif",
-        "srs": "Homolosine"
+        "file_path_sand": "/home/andrea/Desktop/New Folder 2/sand_js.tif",
+        "file_path_clay": "/home/andrea/Desktop/New Folder 2/clay_js.tif",
+        "srs": "EPSG:4326"
       },
       "download_soil_grids": {
         "wcs_server": "http://maps.isric.org/mapserv?map=/map/{var}.map",
@@ -48,11 +48,11 @@
     }
   },
   "path": {
-    "output": "/home/andrea/Desktop/test-soil_maps_new/outcome",
-    "ancillary": "/home/andrea/Desktop/test-soil_maps_new/ancillary"
+    "output": "/home/andrea/Desktop/New Folder 2/outcome",
+    "ancillary": "/home/andrea/Desktop/New Folder 2/ancillary"
   },
   "log": {
-    "folder": "/home/andrea/Desktop/test-soil_maps_new/log",
+    "folder": "/home/andrea/Desktop/New Folder 2/log",
     "file_name": "make_soil_{domain}.log"
   },
   "advanced": {
