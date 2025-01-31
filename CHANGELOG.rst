@@ -1,6 +1,15 @@
 =========
 Changelog
 =========
+Version 3.0.0 [2024-01-31]
+**************************
+UPD: **all**
+    - Refactored all the code to include S3M in shygeo
+
+APP: **make_soil_type_land_cover_maps.py**
+    - Add support for new soil and vegetation maps
+    - Add support for new land cover
+
 Version 2.0.1 [2022-06-09]
 **************************
 APP: **make_dams_lakes_file.py**
